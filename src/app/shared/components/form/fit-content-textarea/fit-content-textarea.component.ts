@@ -44,6 +44,7 @@ export class FitContentTextareaComponent
   }
 
   public preReserveHeight?: number;
+  get currentModel() { return this.isDynamic ? (this.model![0] as any).value : this.model }
 
   ngOnChanges({ show, clear }: SimpleChanges): void {
     if (show) {

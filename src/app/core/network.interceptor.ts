@@ -1,11 +1,6 @@
 import {filter, take, takeUntil} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-} from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import {finalize, Observable} from 'rxjs';
 import {LoaderService} from './services/loader.service';
 import {NavigationStart, Router} from '@angular/router';
