@@ -1,11 +1,10 @@
+import { Component, DoCheck, OnInit } from '@angular/core';
+import { FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   ITableConfig,
   ITableData,
 } from '@shared/components/data-table/data-table.component';
-import { Modules, TablePages } from '@utilities/enum/router.enum';
-import { Component, OnInit, DoCheck } from '@angular/core';
-import { FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 import {
@@ -16,12 +15,19 @@ import {
   takeUntil,
 } from 'rxjs';
 
+import { HttpClient } from '@angular/common/http';
+import { AuthenticationService } from '@core/services/authentication.service';
 import { ConsoleService } from '@core/services/console.service';
 import { ProjectsService } from '@core/services/projects.service';
 import { UsersService } from '@core/services/users.service';
-import { EContent, ROLE } from '@utilities/enum/common.enum';
-import { OverlayService } from '@shared/service/overlay.service';
+import { StorageMap } from '@ngx-pwa/local-storage';
 import { TranslateService } from '@ngx-translate/core';
+import { OverlayService } from '@shared/service/overlay.service';
+import { RouterService } from '@shared/service/router.service';
+import { BasePage } from '@utilities/base/base-page';
+import { EContent, ROLE } from '@utilities/enum/common.enum';
+import { EQuestionSectionId } from '@utilities/enum/question.enum';
+import { slideEnter } from '@utilities/helper/animations.helper';
 import {
   IField,
   IProject,
@@ -29,18 +35,11 @@ import {
   IQuestion,
   ISystem6Rs,
 } from '@utilities/interface/api/project-api.interface';
-import { slideEnter } from '@utilities/helper/animations.helper';
-import { Quartile } from '@utilities/model/quartile.model';
-import { EQuestionSectionId } from '@utilities/enum/question.enum';
-import { ISixRName, sixRColorMap } from '@utilities/map/sixR.map';
-import { BasePage } from '@utilities/base/base-page';
-import { RouterService } from '@shared/service/router.service';
-import { QuestionMap } from '@utilities/map/question.map';
 import { IOption } from '@utilities/interface/common.interface';
-import { StorageMap } from '@ngx-pwa/local-storage';
 import { ITenant } from '@utilities/interface/tenant.interface';
-import { AuthenticationService } from '@core/services/authentication.service';
-import { HttpClient } from '@angular/common/http';
+import { QuestionMap } from '@utilities/map/question.map';
+import { ISixRName, sixRColorMap } from '@utilities/map/sixR.map';
+import { Quartile } from '@utilities/model/quartile.model';
 
 @Component({
   selector: 'table-page',
@@ -194,27 +193,7 @@ export class TablePageComponent extends BasePage implements OnInit, DoCheck {
 
   /** 前往project頁面 */
   public toProject(projectId?: string | number): void {
-    const TempId = this.projectList?.find(
-      project => project.projectId === projectId
-    )?.questionTemplateId;
-    const TenantId = this.projectList?.find(
-      project => project.projectId === projectId
-    )?.tenantId;
 
-    const IsTenant =
-      this.projectList.find(project => project.projectId === projectId)
-        ?.tenantId === this.tenantId;
-    this.router.navigateByUrl(
-      `${Modules.Table}/${projectId
-        ? (IsTenant || this.isSiteAdmin ? 'edit/' : 'view/') +
-        projectId +
-        '/' +
-        TempId +
-        '/' +
-        TenantId
-        : TablePages.New
-      }`
-    );
   }
 
   public onTenantSelect(option: IOption): void {

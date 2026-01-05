@@ -1,13 +1,13 @@
-
-
 @import "color";
 @import "variables";
+
 :host {
   display: flex;
   position: fixed;
-  z-index: map-get($layout-level , 'dropdown' );
+  z-index: map-get($layout-level , 'dropdown');
   height: 100%;
 }
+
 .dropdown {
   max-height: 15rem;
   border: 1px solid $light-gray-2;
